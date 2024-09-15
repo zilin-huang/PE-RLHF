@@ -43,7 +43,7 @@ python train_ppo.py --num-gpus=1
 
 📝 **Note:** The result reported in our paper for RL and safe RL methods were repeated five times using different random seeds. To save computer resource, can revise the `num_seeds=5` to `num_seeds=1` in the `train_[ppo/sac/sac_lag/ppo_lag].py`.
 
-The training and testing results for RL and safe RL methods will be saved in the run_baselines/[ppo/sac/sac_lag/ppo_lag] folder. You can open it with:
+Then, the training and testing results for RL and safe RL methods will be saved in the run_baselines/[ppo/sac/sac_lag/ppo_lag] folder. You can open it with:
 
 ```bash
 tensorboard --logdir=. --port=8080

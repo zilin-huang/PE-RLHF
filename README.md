@@ -1,5 +1,20 @@
 # Trustworthy Human-AI Collaboration ✨: Reinforcement Learning with Human Feedback and Physics Knowledge for Safe Autonomous Driving
 
+[**Webpage**](https://zilin-huang.github.io/PE-RLHF-website/) | 
+[**Code**](https://github.com/zilin-huang/PE-RLHF) | 
+[**Video**](https://www.youtube.com/embed/7TQ5ZCrqtfI?si=r6HAMMDa3XVdAITO) |
+[**Paper**](https://arxiv.org/abs/2409.00858) 
+
+<video width="600" controls>
+  <source src="https://github.com/zilin-huang/PE-RLHF-website/blob/master/static/videos/RLHF.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
+## 🌟 Highlights
+- **`2024-09-16`** **Codes are now release!** 
+- **`2024-09-12`** Explore our project page, now live [here](https://zilin-huang.github.io/PE-RLHF-website/)🔗!
+- **`2024-09-01`** Our paper is available on [Arxiv](https://arxiv.org/abs/2409.00858)📄!
 
 
 ## 1. Requirements 📦

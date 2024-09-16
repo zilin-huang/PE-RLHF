@@ -5,10 +5,9 @@
 [**Video**](https://www.youtube.com/embed/7TQ5ZCrqtfI?si=r6HAMMDa3XVdAITO) |
 [**Paper**](https://arxiv.org/abs/2409.00858) 
 
-<video width="600" controls>
+[<video width="600" controls>
   <source src="https://github.com/zilin-huang/PE-RLHF-website/blob/master/static/videos/RLHF.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+</video>](https://github.com/zilin-huang/PE-RLHF-website/blob/master/static/videos/RLHF.mp4)
 
 
 ## 🌟 Highlights

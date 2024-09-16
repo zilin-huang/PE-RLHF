@@ -23,8 +23,19 @@ conda install -c nvidia cudnn
 # Now you can run the training script of PE-RLHF in MetaDrive Environment.
 ```
 
-## 2. Getting Started 🚀 
+## 2. Quick Start 🚀 
+Since the main experiment of PE-RLHF takes one hour and requires a steering wheel (Logitech G920), we further provide an 
+easy task for users to experience PE-RLHF.
 
+```bash
+# use PE-RLHF environment
+conda activate PE-RLHF 
+cd pe_rlhf/run_main_exp/
+python train_pe_rlhf_keyboard_easy.py --num-gpus=1
+```
+In this task, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to 
+the destination ("E" can be used to pause simulation). 
+Since there is only one map in this task, 10 minutes or 5000 transitions is enough for HAIM-DRL agent to learn a policy.
 
 ## 4. Training Baselines
 ### 4.1 Physics-based Methods 
@@ -37,7 +48,7 @@ cd pe_rlhf/run_baselines
 # eval physics-based experiment
 python eval_IDM_MOBIL.py
 ```
-Then, testing results for physics-based methods will be saved in the `idm_mobil_results.csv` file.
+📊 **Visualizing Results:** Then, testing results for physics-based methods will be saved in the `idm_mobil_results.csv` file.
 
 ### 4.2 RL and Safe RL Methods 
 For SAC/PPO/PPO-Lag/SAC-Lag, there is no additional requirement to run the training scripts. 
@@ -57,7 +68,7 @@ python train_ppo.py --num-gpus=1
 
 📝 **Note:** The result reported in our paper for RL and safe RL methods were repeated five times using different random seeds. To save computer resource, can revise the `num_seeds=5` to `num_seeds=1` in the `train_[ppo/sac/sac_lag/ppo_lag].py`.
 
-Then, the training and testing results for RL and safe RL methods will be saved in the run_baselines/[ppo/sac/sac_lag/ppo_lag] folder. You can open it with tensorboard. 
+📊 **Visualizing Results:** Then, the training and testing results for RL and safe RL methods will be saved in the run_baselines/[ppo/sac/sac_lag/ppo_lag] folder. You can open it with tensorboard. 
 
 For example:
 ```bash
@@ -99,7 +110,7 @@ File "/home/zilin/anaconda3/envs/PE-RLHF/lib/python3.7/site-packages/ray/rllib/u
     tensor = torch.from_numpy(np.asarray(item))
 TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
 ```
-**Solution:** Modify lines 104-105 of the original code, i,e., `tensor = torch.from_numpy(np.asarray(item))`. The new code as
+💡 **Solution:** Modify lines 104-105 of the original code, i,e., `tensor = torch.from_numpy(np.asarray(item))`. The new code as
 ```bash
 else:
     # tensor = torch.from_numpy(np.asarray(item))
@@ -114,8 +125,8 @@ else:
 To run GAIL/HG-DAgger/IWR, please create a new conda environment and install GPU-version of torch:
 ```bash
 # Create virtual environment
-conda create -n HAIM-DRL-torch python=3.7
-conda activate HAIM-DRL-torch
+conda create -n PE-RLHF-torch python=3.7
+conda activate PE-RLHF-torch
 
 # Install basic dependency
 pip install -e .
@@ -124,10 +135,32 @@ pip install -e .
 conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
 conda install cudatoolkit=11.0
 ```
-Now, IWR/HG-Dagger/GAIL can be trained by:
+Now, GAIL can be trained by:
 ```bash
 cd pe_rlhf/run_baselines 
 python train_[gail/IWR/hg_dagger].py
 ```
+📝 **Note:** You can set the maximum number of training cycles in `train_gail.py` by modifying `parser.add_argument('--max_epoch', default=3000)`. 
+
+
+IWR/HG-Dagger can be trained by:
+```bash
+cd pe_rlhf/run_baselines 
+python train_[IWR/hg_dagger].py
+```
 
 📝 **Note:** IWR and HG-Dagger run through a warm-up period of renderless, then the metadrive render screen pops up, with the human-in-the-loop capability activated to allow a human takeover. You can set the number of training rounds by modifying `NUM_ITS = 5` in `train_[IWR/hg_dagger].py`. Also, you can adjust `BC_WARMUP_DATA_USAGE = 30000` in `train_[IWR/hg_dagger].py` to set a different number of warmup transitions. 
+
+📊 **Visualizing Results:** Then, the training model for IWR and HG-Dagger will be saved in the run_baselines folder. Notably, to evaluate IWR and HG-Dagger, you should run `algo/IWR/eval_IWR.py` or `algo/HG_Dagger/eval_hg_dagger.py`.
+
+### 4.6 Online RLHF Methods
+If you want to run HACO
+
+```bash
+cd pe_rlhf/run_baselines 
+python train_haco.py --num-gpus=1
+```
+
+📝 **Note:** If steering wheel is not available, uncomment line 25 in `train_haco.py`, i.e., `# “controller”: “keyboard”, # use keyboard or not`. This allows you to use the keyboard to control agent.
+
+📊 **Visualizing Results:** To evaluate HACO, you should run `algo/IWR/eval_haco.py`.

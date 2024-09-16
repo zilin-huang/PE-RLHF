@@ -31,20 +31,27 @@ easy task for users to experience PE-RLHF.
 # use PE-RLHF environment
 conda activate PE-RLHF 
 cd pe_rlhf/run_main_exp/
-python train_pe_rlhf_keyboard_easy.py --local-dir PATH_TO_SAVE_DIR --num-gpus=[your_gpu_num]
+python train_pe_rlhf_keyboard_easy.py --exp-name PE_RLHF --local-dir PATH_TO_SAVE_DIR --num-gpus=[your_gpu_num]
 ```
 For example:
 ```bash
 python train_pe_rlhf_keyboard_easy.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1
 ```
 
-📝 **Note:** To make it easier for you to get started and test our code, we have uploaded a Value Estimator, i.e., `sac_expert.npz`, in the `utils/saved_expert folder`. Meanwhile, we set `"warmup_ts": 0`, so the info interface will show warmup: False. i.e., no need to warm up.
+Now, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to the destination ("E" can be used to pause simulation).  Since there is only one map in this task, 10 minutes or 5000 transitions is enough for agent to learn a policy.
+
+📝 **Note:** To make it easier for you to get started and test our code, we have uploaded a pretrained value estimator, i.e., `sac_expert.npz`, in the `utils/saved_expert folder`. Meanwhile, we set `"warmup_ts": 0`, so the info interface will show warmup: False. i.e., no need to warm up.
 
 
-Now, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to 
-the destination ("E" can be used to pause simulation). 
-Since there is only one map in this task, 10 minutes or 5000 transitions is enough for agent to learn a policy.
+## 3. Main Experiment
+To reproduce the main experiment reported in paper, run following scripts:
+```bash
+python train_pe_rlhf.py --exp-name PE_RLHF --local-dir PATH_TO_SAVE_DIR --num-gpus=[your_gpu_num]
+```
+If steering wheel is not available, set ```controller="keyboard"``` in the script to train HAIM-DRL agent. After launching this script,
+one hour is required for human to assist HAIM-DRL agent to learn a generalizable driving policy by training in 50 different maps.
 
+📊 **Visualizing Results:** Then, the training results will be saved in the run_main_exp/PE_RLHF folder. To evaluate PE-RLHF, you should run `run_main_exp/eval_pe_rlhf.py`.
 
 ## 4. Training Baselines
 ### 4.1 Physics-based Methods 
@@ -100,7 +107,7 @@ Next, move the dataset, for example, `human_traj_100_new.json`, from the Downloa
 
 For example, you can use the following command:
 ```bash
-mv ~/Downloads/human_traj_100_new.json /home/codes/PE-RLHF/pe_rlhf/
+mv ~/Downloads/human_traj_100_new.json /home/sky-lab/codes/PE-RLHF/pe_rlhf/
 ```
 
 ### 4.4 IL Methods
@@ -172,4 +179,14 @@ python train_haco.py --num-gpus=1
 
 📝 **Note:** If steering wheel is not available, uncomment line 25 in `train_haco.py`, i.e., `# “controller”: “keyboard”, # use keyboard or not`. This allows you to use the keyboard to control agent.
 
-📊 **Visualizing Results:** To evaluate HACO, you should run `algo/IWR/eval_haco.py`.
+📊 **Visualizing Results:** Then, the training results will be saved in the run_baselines/HACO folder. To evaluate HACO, you should run `run_baselines/eval_haco.py`.
+
+
+
+## 5. Ablation Study
+The `pe_rlhf_human_in_the_loop_env.py` is the core file to implement the PE-RLHF. You can examine the sensitivity of PE-RLHF as well as perform ablation experiments by adjusting the settings in `lines 52 - 67`. In addition, you can also do this by adjusting `lines 30 - 35` of `train_pe_rlhf.py`.
+
+You can also achieve this effect by setting command line parameters. For example:
+```bash
+python train_pe_rlhf.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1 --pe_rlhf-ensemble --ckpt-freq 10
+```

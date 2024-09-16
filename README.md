@@ -82,3 +82,52 @@ For example, you can use the following command:
 ```bash
 mv ~/Downloads/human_traj_100_new.json /home/codes/PE-RLHF/pe_rlhf/
 ```
+
+### 4.4 IL Methods
+If you wish to run BC/CQL, extra setting is required as follows:
+```bash
+# ray needs to be updated to 1.2.0
+pip install ray==1.2.0
+cd pe_rlhf/run_baselines
+# launch BC/CQL experiment
+python train_[bc/cql].py --num-gpus=0 # do not use gpu
+```
+⚙️ **Issue:** BC/CQL will encounter the following error:
+
+```bash
+File "/home/zilin/anaconda3/envs/PE-RLHF/lib/python3.7/site-packages/ray/rllib/utils/torch_ops.py", line 105, in mapping
+    tensor = torch.from_numpy(np.asarray(item))
+TypeError: can't convert np.ndarray of type numpy.object_. The only supported types are: float64, float32, float16, complex64, complex128, int64, int32, int16, int8, uint8, and bool.
+```
+**Solution:** Modify lines 104-105 of the original code, i,e., `tensor = torch.from_numpy(np.asarray(item))`. The new code as
+```bash
+else:
+    # tensor = torch.from_numpy(np.asarray(item))
+    if isinstance(item, bool):
+        item = int(item)
+    tensor = torch.from_numpy(np.asarray(item).astype(float))
+```
+
+📝 **Note:** Since the computational process of BC and CQL is on the CPU, it requires a relatively large amount of CPU memory. To reduce the computational resources, you can revise the `num_seeds=5` to `num_seeds=1` in the `train_[bc/cql].py`. Also we set `bc_iters=tune.grid_search([5_0000, 10_0000]` in `train_cql.py`. You can also change it to `bc_iters=5_0000`. this will also save computational resources.
+
+### 4.5 GAIL and Offline RLHF Methods
+To run GAIL/HG-DAgger/IWR, please create a new conda environment and install GPU-version of torch:
+```bash
+# Create virtual environment
+conda create -n HAIM-DRL-torch python=3.7
+conda activate HAIM-DRL-torch
+
+# Install basic dependency
+pip install -e .
+
+# install torch
+conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
+conda install cudatoolkit=11.0
+```
+Now, IWR/HG-Dagger/GAIL can be trained by:
+```bash
+cd pe_rlhf/run_baselines 
+python train_[gail/IWR/hg_dagger].py
+```
+
+📝 **Note:** IWR and HG-Dagger run through a warm-up period of renderless, then the metadrive render screen pops up, with the human-in-the-loop capability activated to allow a human takeover. You can set the number of training rounds by modifying `NUM_ITS = 5` in `train_[IWR/hg_dagger].py`. Also, you can adjust `BC_WARMUP_DATA_USAGE = 30000` in `train_[IWR/hg_dagger].py` to set a different number of warmup transitions. 

@@ -31,11 +31,20 @@ easy task for users to experience PE-RLHF.
 # use PE-RLHF environment
 conda activate PE-RLHF 
 cd pe_rlhf/run_main_exp/
-python train_pe_rlhf_keyboard_easy.py --num-gpus=1
+python train_pe_rlhf_keyboard_easy.py --local-dir PATH_TO_SAVE_DIR --num-gpus=[your_gpu_num]
 ```
-In this task, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to 
+For example:
+```bash
+python train_pe_rlhf_keyboard_easy.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1
+```
+
+📝 **Note:** To make it easier for you to get started and test our code, we have uploaded a Value Estimator, i.e., `sac_expert.npz`, in the `utils/saved_expert folder`. Meanwhile, we set `"warmup_ts": 0`, so the info interface will show warmup: False. i.e., no need to warm up.
+
+
+Now, human is authorized to take over the vehicle by pressing **W/A/S/D** and guide or safeguard the agent to 
 the destination ("E" can be used to pause simulation). 
-Since there is only one map in this task, 10 minutes or 5000 transitions is enough for HAIM-DRL agent to learn a policy.
+Since there is only one map in this task, 10 minutes or 5000 transitions is enough for agent to learn a policy.
+
 
 ## 4. Training Baselines
 ### 4.1 Physics-based Methods 

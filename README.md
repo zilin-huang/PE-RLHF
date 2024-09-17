@@ -5,7 +5,7 @@
 [**Video**](https://www.youtube.com/embed/7TQ5ZCrqtfI?si=r6HAMMDa3XVdAITO) |
 [**Paper**](https://arxiv.org/abs/2409.00858) 
 
-https://github.com/user-attachments/assets/24faacdd-bbda-4f58-94df-4a05e61931f3
+https://github.com/user-attachments/assets/970f70c8-16c3-43fa-9472-da9ffeb8ee44
 
 
 ## 🌟 Highlights

@@ -202,3 +202,18 @@ You can also achieve this effect by setting command line parameters. For example
 ```bash
 python train_pe_rlhf.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1 --pe_rlhf-ensemble --ckpt-freq 10
 ```
+
+## 🔖 Citation
+If you find our paper and codes useful, please kindly cite us via:
+
+```bibtex
+@article{huang2024trustworthy,
+        title={Trustworthy Human-AI Collaboration: Reinforcement Learning with Human Feedback and Physics Knowledge for Safe Autonomous Driving},
+        author={Huang, Zilin and Sheng, Zihao and Chen, Sikai},
+        journal={arXiv preprint arXiv:2409.00858},
+        year={2024}
+      }
+```
+
+## 📝 License
+DiLu is released under the Apache 2.0 license.

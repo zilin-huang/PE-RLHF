@@ -55,7 +55,7 @@ Now, human is authorized to take over the vehicle by pressing **W/A/S/D** and gu
 📝 **Note:** To make it easier for you to get started and test our code, we have uploaded a pretrained value estimator, i.e., `sac_expert.npz`, in the `utils/saved_expert folder`. Meanwhile, we set `"warmup_ts": 0`, so the info interface will show warmup: False. i.e., no need to warm up.
 
 
-## 3. Main Experiment
+## 3. Main Experiment 💡
 To reproduce the main experiment reported in paper, run following scripts:
 ```bash
 python train_pe_rlhf.py --exp-name PE_RLHF --local-dir PATH_TO_SAVE_DIR --num-gpus=[your_gpu_num]
@@ -65,8 +65,10 @@ one hour is required for human to assist HAIM-DRL agent to learn a generalizable
 
 📊 **Visualizing Results:** Then, the training results will be saved in the run_main_exp/PE_RLHF folder. To evaluate PE-RLHF, you should run `run_main_exp/eval_pe_rlhf.py`.
 
-## 4. Training Baselines
-### 4.1 Physics-based Methods 
+## 4. Training Baselines 🖥️
+
+<details>
+<summary><b> 4.1 Physics-based Methods </b></summary>
 The physics-based methods (e.g., IDM-MOBIL model) does not need to train a model, to eval the performance you can directly run:
 
 ```bash
@@ -77,8 +79,10 @@ cd pe_rlhf/run_baselines
 python eval_IDM_MOBIL.py
 ```
 📊 **Visualizing Results:** Then, testing results for physics-based methods will be saved in the `idm_mobil_results.csv` file.
+</details>
 
-### 4.2 RL and Safe RL Methods 
+<details>
+<summary><b> 4.2 RL and Safe RL Methods </b></summary> 
 For SAC/PPO/PPO-Lag/SAC-Lag, there is no additional requirement to run the training scripts. 
 
 ```bash
@@ -102,8 +106,12 @@ For example:
 ```bash
 tensorboard --logdir=. --port=8080
 ```
+</details>
 
-### 4.3 Human Demonstration Dataset
+
+<details>
+<summary><b> 4.3 Human Demonstration Dataset </b></summary>
+
 Human demonstration dataset is required to run offline RL, IL, and offline RLHF methods. You can collect human demonstration by runing:
 
 ```bash
@@ -121,9 +129,14 @@ For example, you can use the following command:
 ```bash
 mv ~/Downloads/human_traj_100_new.json /home/sky-lab/codes/PE-RLHF/pe_rlhf/
 ```
+</details>
 
-### 4.4 IL Methods
+
+<details>
+<summary><b> 4.4 IL Methods </b></summary>
+    
 If you wish to run BC/CQL, extra setting is required as follows:
+
 ```bash
 # ray needs to be updated to 1.2.0
 pip install ray==1.2.0
@@ -131,6 +144,7 @@ cd pe_rlhf/run_baselines
 # launch BC/CQL experiment
 python train_[bc/cql].py --num-gpus=0 # do not use gpu
 ```
+
 ⚙️ **Issue:** BC/CQL will encounter the following error:
 
 ```bash
@@ -148,21 +162,25 @@ else:
 ```
 
 📝 **Note:** Since the computational process of BC and CQL is on the CPU, it requires a relatively large amount of CPU memory. To reduce the computational resources, you can revise the `num_seeds=5` to `num_seeds=1` in the `train_[bc/cql].py`. Also we set `bc_iters=tune.grid_search([5_0000, 10_0000]` in `train_cql.py`. You can also change it to `bc_iters=5_0000`. this will also save computational resources.
+</details>
 
-### 4.5 GAIL and Offline RLHF Methods
+
+<details>
+<summary><b> 4.5 GAIL and Offline RLHF Methods </b></summary>
+    
 To run GAIL/HG-DAgger/IWR, please create a new conda environment and install GPU-version of torch:
+
 ```bash
 # Create virtual environment
 conda create -n PE-RLHF-torch python=3.7
 conda activate PE-RLHF-torch
-
 # Install basic dependency
 pip install -e .
-
 # install torch
 conda install pytorch==1.7.1 torchvision==0.8.2 torchaudio==0.7.2 cudatoolkit=11.0 -c pytorch
 conda install cudatoolkit=11.0
 ```
+
 Now, GAIL can be trained by:
 ```bash
 cd pe_rlhf/run_baselines 
@@ -180,8 +198,11 @@ python train_[IWR/hg_dagger].py
 📝 **Note:** IWR and HG-Dagger run through a warm-up period of renderless, then the metadrive render screen pops up, with the human-in-the-loop capability activated to allow a human takeover. You can set the number of training rounds by modifying `NUM_ITS = 5` in `train_[IWR/hg_dagger].py`. Also, you can adjust `BC_WARMUP_DATA_USAGE = 30000` in `train_[IWR/hg_dagger].py` to set a different number of warmup transitions. 
 
 📊 **Visualizing Results:** Then, the training model for IWR and HG-Dagger will be saved in the run_baselines folder. Notably, to evaluate IWR and HG-Dagger, you should run `algo/IWR/eval_IWR.py` or `algo/HG_Dagger/eval_hg_dagger.py`.
+</details>
 
-### 4.6 Online RLHF Methods
+
+<details>
+<summary><b> 4.6 Online RLHF Methods</b></summary>
 If you want to run HACO
 
 ```bash
@@ -192,10 +213,10 @@ python train_haco.py --num-gpus=1
 📝 **Note:** If steering wheel is not available, uncomment line 25 in `train_haco.py`, i.e., `# “controller”: “keyboard”, # use keyboard or not`. This allows you to use the keyboard to control agent.
 
 📊 **Visualizing Results:** Then, the training results will be saved in the run_baselines/HACO folder. To evaluate HACO, you should run `run_baselines/eval_haco.py`.
+</details>
 
 
-
-## 5. Ablation Study
+## 5. Ablation Study 📊 
 The `pe_rlhf_human_in_the_loop_env.py` is the core file to implement the PE-RLHF. You can examine the sensitivity of PE-RLHF as well as perform ablation experiments by adjusting the settings in `lines 52 - 67`. In addition, you can also do this by adjusting `lines 30 - 35` of `train_pe_rlhf.py`.
 
 You can also achieve this effect by setting command line parameters. For example:
@@ -203,13 +224,14 @@ You can also achieve this effect by setting command line parameters. For example
 python train_pe_rlhf.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1 --pe_rlhf-ensemble --ckpt-freq 10
 ```
 
-## 🤝 Contributions
+## Contributions 🤝 
 
 Your thoughts and contributions are a green signal for us! 🚦
-If you have suggestions or additional insights, **feel free to open an issue or submit a pull request**.
+
+If you have any suggestions or collaboration about this repo, feel free to create a issue/PR or send email to us (zilin.huang@wisc.edu). 📬
 
 
-## 🔖 Citation
+## Citation 🔖 
 If you find our paper and codes useful, please kindly cite us via:
 
 ```bibtex
@@ -221,12 +243,14 @@ If you find our paper and codes useful, please kindly cite us via:
       }
 ```
 
-## 📌 Other Awesome Projects from Our Team
+## Other Awesome Projects from Our Team 📌 
 
 Our team is actively involved in various innovative projects in the realm of autonomous driving. Here are some other exciting repositories that you might find interesting:
 
-- **[Human as AI mentor](https://zilin-huang.github.io/HAIM-DRL-website/)**
-- **[Traffic expertise meets residual RL](https://github.com/zihaosheng/traffic-expertise-RL/)**
+- **[Human as AI mentor: Enhanced human-in-the-loop reinforcement learning for safe and efficient autonomous driving](https://zilin-huang.github.io/HAIM-DRL-website/)**
+- **[Traffic expertise meets residual RL: Knowledge-informed model-based residual reinforcement learning for CAV trajectory control](https://github.com/zihaosheng/traffic-expertise-RL/)**
+
+  
 ## 📝 License
 The content of this repository is under the hood of an [MIT License](https://github.com/PJLab-ADG/GPT4V-AD-Exploration/blob/main/LICENSE).
 

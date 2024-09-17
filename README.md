@@ -1,4 +1,4 @@
-# 🚗 Trustworthy Human-AI Collaboration: Reinforcement Learning with Human Feedback and Physics Knowledge for Safe Autonomous Driving
+# Trustworthy Human-AI Collaboration 🤖: Reinforcement Learning with Human Feedback and Physics Knowledge for Safe Autonomous Driving
 
 [**Webpage**](https://zilin-huang.github.io/PE-RLHF-website/) | 
 [**Code**](https://github.com/zilin-huang/PE-RLHF) | 

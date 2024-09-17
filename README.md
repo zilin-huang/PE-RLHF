@@ -247,8 +247,8 @@ If you find our paper and codes useful, please kindly cite us via:
 
 Our team is actively involved in various innovative projects in the realm of autonomous driving. Here are some other exciting repositories that you might find interesting:
 
-- **[Human as AI mentor: Enhanced human-in-the-loop reinforcement learning for safe and efficient autonomous driving](https://zilin-huang.github.io/HAIM-DRL-website/)**
-- **[Traffic expertise meets residual RL: Knowledge-informed model-based residual reinforcement learning for CAV trajectory control](https://github.com/zihaosheng/traffic-expertise-RL/)**
+- **[Human as AI mentor](https://zilin-huang.github.io/HAIM-DRL-website/)**
+- **[Traffic expertise meets residual RL](https://github.com/zihaosheng/traffic-expertise-RL/)**
 
   
 ## 📝 License

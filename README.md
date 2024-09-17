@@ -203,6 +203,12 @@ You can also achieve this effect by setting command line parameters. For example
 python train_pe_rlhf.py --exp-name PE_RLHF --local-dir /home/sky-lab/codes/PE-RLHF/pe_rlhf/run_main_exp --num-gpus=1 --pe_rlhf-ensemble --ckpt-freq 10
 ```
 
+## 🤝 Contributions
+
+Your thoughts and contributions are a green signal for us! 🚦
+If you have suggestions or additional insights, **feel free to open an issue or submit a pull request**.
+
+
 ## 🔖 Citation
 If you find our paper and codes useful, please kindly cite us via:
 
@@ -215,5 +221,12 @@ If you find our paper and codes useful, please kindly cite us via:
       }
 ```
 
+## 📌 Other Awesome Projects from Our Team
+
+Our team is actively involved in various innovative projects in the realm of autonomous driving. Here are some other exciting repositories that you might find interesting:
+
+- **[Human as AI mentor](https://zilin-huang.github.io/HAIM-DRL-website/)**
+- **[Traffic expertise meets residual RL](https://github.com/zihaosheng/traffic-expertise-RL/)**
 ## 📝 License
-DiLu is released under the Apache 2.0 license.
+The content of this repository is under the hood of an [MIT License](https://github.com/PJLab-ADG/GPT4V-AD-Exploration/blob/main/LICENSE).
+
